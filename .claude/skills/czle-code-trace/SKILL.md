@@ -9,9 +9,11 @@ description: GolfFix Android 코드의 호출 흐름, 데이터 분기, nullable
 
 GolfFix Android 코드의 호출 흐름, 데이터 분기, nullable/API 계약을 근거 중심으로 추적한다. 사용자가 "왜 이런 동작이 일어나는가"를 묻거나 데이터 흐름 이해가 필요할 때 사용한다.
 
+CLAUDE.md의 글쓰기 원칙을 따른다.
+
 ## 범위
 
-- Android 클라이언트 저장소: `/Users/kimgideok/androidProjects/gf-client-android-kotlin`
+- Android 클라이언트 저장소: `/Users/kimgideok/gf-client-android-kotlin`
 - Kotlin, XML, manifest, API DTO/mapper, repository, ViewModel, Activity, Fragment, Compose, RecyclerView, 로컬 저장소 흐름
 - 읽기 전용 분석. 사용자가 명시적으로 구현을 승인하기 전까지 파일을 수정하지 않는다.
 

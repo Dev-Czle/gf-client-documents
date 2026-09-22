@@ -1,43 +1,64 @@
 # Repository Guidelines
 
-## Project Structure & Module Organization
+## 저장소 성격
 
-This repository is currently a minimal scaffold: no application source, tests, or build configuration are tracked yet. The root contains `.mcp.json`, which declares MCP server configuration and is presently empty.
+Android와 iOS의 설계 결정, 아키텍처 비교, 공유 요구사항을 한국어로 기록하는 문서 저장소다.
+애플리케이션 소스, 테스트, 빌드 설정이 없고 앞으로도 두지 않는다.
 
-When adding the first implementation, keep the layout conventional and easy to navigate:
+- 문서는 저장소 루트에 Markdown으로 둔다. 가끔 HTML.
+- 문서 종류는 `Architecture-*.md`, `Decision-*.md`, `Shared-*.md`, `Migration-*.md`.
+- 파일명은 이슈 번호가 아니라 주제로 짓는다. 예: `Decision-Camera-Recording.md`
+- `.claude/skills/`에 이 저장소용 스킬을 둔다.
+- 참고 레포: Android `/Users/kimgideok/gf-client-android-kotlin`, iOS `/Users/kimgideok/AndroidProjects/gf-client-ios-swift`
 
-- `src/` for application or library code.
-- `tests/` for automated tests that mirror `src/` paths.
-- `assets/` for static files such as images or fixtures.
-- `docs/` for design notes or longer operational documentation.
+`src/`, `tests/` 같은 코드 디렉토리를 만들지 않는다. 빈 디렉토리와 추측성 구조도 만들지 않는다.
 
-Avoid adding empty directories or speculative abstractions. Group code by feature once multiple related files exist.
+## 검증
 
-## Build, Test, and Development Commands
+빌드, 린트, 테스트 명령이 없다. `npm test`나 `make build`가 동작한다고 가정하지 않는다.
 
-No build, test, lint, or run commands are configured yet. Do not assume commands such as `npm test` or `make build` work. When introducing tooling, expose a small, documented command set through the ecosystem's standard entry point (for example, `package.json`, `pyproject.toml`, or `Makefile`). Update this guide in the same change.
-
-Before submitting changes, always run:
+변경 후 항상 실행한다.
 
 ```sh
 git status --short
 git diff --check
 ```
 
-These commands confirm the intended files changed and catch whitespace errors.
+문서 내용은 아래를 확인한다.
 
-## Coding Style & Naming Conventions
+- 문서에 적은 코드 경로와 심볼이 참고 레포에 실제로 존재하는지 확인한다.
+- 한쪽 플랫폼 주장을 쓰면 반대쪽 코드도 함께 확인한다.
+- 확인하지 못한 부분은 `{확인 필요}`로 남긴다.
 
-Follow the formatter and linter native to the language selected by the project. Commit their configuration with the first source files. Until then, use UTF-8, Unix line endings, spaces rather than tabs, and a final newline.
+## 표기
 
-Use descriptive names: `snake_case` for Python modules, `kebab-case` for documentation files, and the language's standard convention for types and functions. Keep configuration at the repository root and never commit credentials to `.mcp.json` or other files.
+- UTF-8, LF 줄바꿈, 스페이스 들여쓰기, 파일 끝 개행.
+- 본문은 한국어. 코드 식별자, 파일 경로, 기술 용어는 원문 그대로 둔다.
+- 코드 경로는 구체적으로 적는다. 예시 코드는 인라인으로 쓴다.
+- 자격증명을 `.mcp.json`을 비롯한 어떤 파일에도 커밋하지 않는다.
 
-## Testing Guidelines
+## 글쓰기 원칙
 
-Add tests with every non-trivial behavior change. Mirror source paths under `tests/` and use the framework's discoverable naming convention, such as `test_*.py` or `*.test.ts`. Bug fixes should include a focused regression test. Document any required environment variables and test command here.
+AI는 사용자의 사고와 판단을 대신하지 않고, 검증·구조화·압축·교정을 돕는다.
+
+- 결론부터 명확하고 자연스러운 문장으로 쓴다.
+- 목적, 독자, 핵심 판단과 필요한 행동을 파악한다.
+- 사실, 사용자의 판단과 AI의 추론을 구분한다.
+- 제공되지 않은 동기, 경험, 감정, 우선순위, 합의나 검증 결과를 만들지 않는다.
+- 결과를 크게 바꾸는 정보가 없으면 질문 하나만 묻는다. 그 외에는 가정을 밝히고 진행한다.
+- 사용자의 용어, 확신 수준과 목소리를 보존한다.
+- 명시적으로 요청받지 않으면 전면 재작성보다 검증과 최소 수정을 우선한다.
+- 위험, 불확실성과 주의할 지점은 숨기지 않는다.
+- 같은 의미라면 더 쉽고 짧은 단어를 선택한다. 전문용어, 추상어와 관용적인 비즈니스 표현은 꼭 필요할 때만 사용하고, 독자가 모를 수 있는 용어는 바로 설명한다.
+- 요점을 부풀리거나 같은 내용을 반복하지 않는다.
+- 목록, 제목과 기술적 세부사항은 이해에 실제로 도움이 될 때만 사용한다.
+- 독자가 이해하고 행동하는 데 필요한 내용만 남긴다.
+- 삭제해도 의미가 유지되는 문장은 삭제한다.
+
+판단은 사람에게서 받고, 사실은 검증하며, 문장은 필요한 만큼만 쓴다.
 
 ## Commit & Pull Request Guidelines
 
-History currently contains only `Initial commit`, so no project-specific convention exists. Use short, imperative subjects such as `Add document parser` or `Fix empty input handling`.
+커밋 제목은 짧은 명령형으로 쓴다. 예: `Add Decision-Camera-Recording`, `Fix networking comparison`
 
-Pull requests should explain the purpose, summarize verification performed, and link relevant issues. Include screenshots only for visible UI changes. Keep each pull request focused and call out configuration or compatibility changes explicitly.
+Pull request는 목적, 수행한 검증, 관련 이슈를 밝힌다. 하나의 PR은 하나의 주제에 집중한다.
